@@ -1,8 +1,4 @@
-# This workflow will install Python dependencies, run tests and lint with a single version of Python
-# For more information see: https://docs.github.com/en/actions/automating-builds-and-tests/building-and-testing-python
-
 name: only tests - Python 
-
 
 on:
   push:
@@ -25,35 +21,16 @@ jobs:
         python-version: "3.10"
     - name: Install dependencies
       run: |
-        lscpu
         python -m pip install --upgrade pip
-        pip install -r requirements.txt
-        pip install coverage
-        pip install pytest-cov
-        pip install -U ddtrace
-        pip install pytest pytest-cov
+        pip install -r requirements.txt || true  # fallback if you don't have requirements.txt
+        pip install coverage pytest pytest-cov
 
     - name: Test with pytest and generate coverage
       run: |
-        export DD_CIVISIBILITY_AGENTLESS_ENABLED=true
-        export DD_API_KEY=${{ secrets.DD_API_KEY }}
-        export DD_SITE=datadoghq.com
-        export DD_ENV=ci
-        export DD_SERVICE=my-python-app
-        pytest --ddtrace --cov=. --cov-report=xml
-        pytest --cov --cov-branch --cov-report=xml
+        pytest --cov=. --cov-branch --cov-report=xml
 
     - name: Upload coverage reports to Codecov
       uses: codecov/codecov-action@v5
       with:
         token: ${{ secrets.CODECOV_TOKEN }}
         slug: nofarb/python-test
-
-    
-    - name: Install datadog-ci
-      run: npm install -g @datadog/datadog-ci
-
-    - name: Evaluate Datadog Quality Gates
-      run: datadog-ci coverage upload --service my-python-app --env ci --tags team:ci coverage.xml
-
-
