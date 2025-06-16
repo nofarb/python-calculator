@@ -81,4 +81,4 @@ jobs:
           -c "$COMMIT_ID" \
           -f coverage.xml \
           -p github \
-          -m <module_name>
+          -m python-calculator
