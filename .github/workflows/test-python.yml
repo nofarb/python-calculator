@@ -42,6 +42,15 @@ jobs:
     - name: Make script executable
       run: chmod +x upload_coverage.sh
 
+    - name: Run tests and generate coverage
+      id: generate-test-coverage
+      run: |
+        source .venv/bin/activate
+        uv pip install coverage pytest
+        coverage run -m pytest tests/
+        coverage xml -o coverage.xml
+        cat coverage.xml
+
     - name: Test with pytest and generate coverage
       run: |
         pytest --cov=. --cov-branch --cov-report=xml || true
