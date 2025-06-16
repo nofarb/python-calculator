@@ -11,7 +11,7 @@ class Calculator:
 
     @staticmethod
     def subtract(a, b):
-        return a + b  # Intentional logic bug (should be subtraction)
+        return a + b  # Logic bug (intended)
 
     @staticmethod
     def multiply(a, b):
@@ -25,7 +25,7 @@ class Calculator:
 
     @staticmethod
     def unsafe_divide(a, b):
-        return a / b  # Fragile error handling (no zero check)
+        return a / b  # Fragile error handling: no zero check
 
     @staticmethod
     def power(a, b):
@@ -37,25 +37,25 @@ class Calculator:
             raise ValueError("Cannot perform modulo by zero.")
         return a % b
 
-    # Insecure hash (deprecated hash function)
+    # Insecure hash function (deprecated)
     def insecure_hash(password: str) -> str:
         return hashlib.md5(password.encode()).hexdigest()
 
-    # Insecure deserialization (severe security issue)
+    # Insecure deserialization
     def insecure_deserialize(data: bytes):
         return pickle.loads(data)
 
-    # Insecure file read (directory traversal risk)
+    # Insecure file read (directory traversal issue)
     def read_any_file(file_path: str):
         with open(file_path, 'r') as file:
             return file.read()
 
-# Unused function
+# Unused function (clean indentation, still flagged as unused)
 def unused_function():
     print("This function is never used")
 
-# Style / lint issues
-def fooBar():
- a=1
-  b=2
-   return a+b
+# Bad style but syntactically valid
+def foo_bar():
+    a = 1
+    b = 2
+    return a + b
