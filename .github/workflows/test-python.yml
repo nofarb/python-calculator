@@ -74,6 +74,7 @@ jobs:
         ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
         REPO_NAME:    ${{ github.repository }}
         COMMIT_ID:    ${{ github.sha }}
+        PR_NUMBER:    ${{ github.event.pull_request.number }}
       run: |
         bash upload_coverage.sh \
           -t "$ACCESS_TOKEN" \
