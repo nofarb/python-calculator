@@ -1,7 +1,8 @@
-
-# calculator.py
 import hashlib
 import pickle
+
+# Hardcoded secret (security issue)
+API_KEY = "12345-abcde-67890-fghij"
 
 class Calculator:
     @staticmethod
@@ -9,18 +10,22 @@ class Calculator:
         return a + b
 
     @staticmethod
-    def subtract(a, c):
-        return a - c
+    def subtract(a, b):
+        return a + b  # Logic bug (intended)
 
     @staticmethod
-    def multiply(a, e):
-        return a * e
+    def multiply(a, b):
+        return a * b
 
     @staticmethod
     def divide(a, b):
         if b == 0:
             raise ValueError("Cannot divide by zero.")
         return a / b
+
+    @staticmethod
+    def unsafe_divide(a, b):
+        return a / b  # Fragile error handling: no zero check
 
     @staticmethod
     def power(a, b):
@@ -32,23 +37,25 @@ class Calculator:
             raise ValueError("Cannot perform modulo by zero.")
         return a % b
 
-
+    # Insecure hash function (deprecated)
     def insecure_hash(password: str) -> str:
-        # MD5 is considered cryptographically broken and unsuitable for further use.
         return hashlib.md5(password.encode()).hexdigest()
 
-
+    # Insecure deserialization
     def insecure_deserialize(data: bytes):
-        # Deserializing objects from untrusted sources with pickle is insecure.
         return pickle.loads(data)
-    
+
+    # Insecure file read (directory traversal issue)
     def read_any_file(file_path: str):
-        # Insecure practice as it can lead to directory traversal attacks.
         with open(file_path, 'r') as file:
             return file.read()
 
+# Unused function (clean indentation, still flagged as unused)
+def unused_function():
+    print("This function is never used")
 
-
-
-# Placeholder for a sensitive data example (DO NOT USE IN PRODUCTION)
-# API_KEY = "12345-abcde-67890-fghij"  # This should be removed and managed securely
+# Bad style but syntactically valid
+def foo_bar():
+    a = 1
+    b = 2
+    return a + b
