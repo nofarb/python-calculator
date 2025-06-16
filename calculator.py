@@ -32,10 +32,29 @@ class Calculator:
             raise ValueError("Cannot perform modulo by zero.")
         return a % b
 
+    @staticmethod
+    def subtract(a, b):
+        return a + b  # Intentional bug: should be subtraction
+
+    
+    @staticmethod
+    def unsafe_divide(a, b):
+        return a / b  # No division by zero check
+
+    def fooBar():
+        a=  1
+        b =2 
+        return a+b 
+
+
 
     def insecure_hash(password: str) -> str:
         # MD5 is considered cryptographically broken and unsuitable for further use.
         return hashlib.md5(password.encode()).hexdigest()
+
+    def unused_function():
+    print("This function is never used")
+
 
 
     def insecure_deserialize(data: bytes):
