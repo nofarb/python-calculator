@@ -31,9 +31,19 @@ jobs:
       run: |
         curl -sS -X GET "${API_BASE}/analysis/ci/scan/script/get" \
           --output start_scan.sh
+          
+    - name: Fetch upload script
+      env:
+        API_BASE: https://ved6vc7dkvz3veaigrllnasa4y0kmqbw.lambda-url.ap-south-1.on.aws
+      run: |
+        curl -sS -X GET "${API_BASE}/pr/analysis/coverage/script/get" \
+          --output upload_coverage.sh
 
     - name: Make script executable
       run: chmod +x start_scan.sh    
+
+    - name: Make script executable
+      run: chmod +x upload_coverage.sh
 
     - name: Test with pytest and generate coverage
       run: |
@@ -59,3 +69,16 @@ jobs:
           -i "" \
           -e ""
 
+    - name: Upload coverage and set status
+      env:
+        ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+        REPO_NAME:    ${{ github.repository }}
+        COMMIT_ID:    ${{ github.sha }}
+      run: |
+        bash upload_coverage.sh \
+          -t "$ACCESS_TOKEN" \
+          -r "$REPO_NAME" \
+          -c "$COMMIT_ID" \
+          -f coverage.xml \
+          -p github \
+          -m <module_name>
