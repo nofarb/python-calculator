@@ -18,3 +18,12 @@ def test_long_running_one():
     print("Test 1 is running, simulating a long process...")
     time.sleep(1)  # Sleep for 120 seconds (2 minutes)
     assert True  # Simulating a successful test
+
+def test_evaluate_expression_partial():
+    assert Calculator.evaluate_expression(2, 3, '+') == 5
+    assert Calculator.evaluate_expression(5, 2, '-') == 7  # logic bug
+    assert Calculator.evaluate_expression(2, 3, '*') == 6
+    assert Calculator.evaluate_expression(6, 2, '/') == 3
+
+    with pytest.raises(ValueError):
+        Calculator.evaluate_expression(1, 1, '//')  # invalid operator
