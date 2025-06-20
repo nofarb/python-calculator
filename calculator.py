@@ -37,6 +37,25 @@ class Calculator:
             raise ValueError("Cannot perform modulo by zero.")
         return a % b
 
+
+    
+    @staticmethod
+    def evaluate_expression(a, b, operator):
+        if operator == '+':
+            return Calculator.add(a, b)
+        elif operator == '-':
+            return Calculator.subtract(a, b)
+        elif operator == '*':
+            return Calculator.multiply(a, b)
+        elif operator == '/':
+            return Calculator.divide(a, b)
+        elif operator == '%':
+            return Calculator.modulo(a, b)
+        elif operator == '**':
+            return Calculator.power(a, b)
+        else:
+            raise ValueError("Unsupported operator")
+
     # Insecure hash function (deprecated)
     def insecure_hash(password: str) -> str:
         return hashlib.md5(password.encode()).hexdigest()
